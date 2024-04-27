@@ -7,11 +7,20 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Winchester';
+    src: url('/assets/fonts/Winchester.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
   @apply font-serif;
 }
 .font-chopin {
-    font-family: 'Chopin', sans-serif;
+    font-family: 'Chopin', font-serif;
+}
+.font-winchester {
+    font-family: 'Winchester', font-serif;
 }
 @layer components {
     .custom-double-border {

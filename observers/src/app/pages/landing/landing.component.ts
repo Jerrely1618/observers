@@ -3,10 +3,10 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-landing',
-  standalone: true,
   imports: [NavbarComponent],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss'
+  styleUrl: './landing.component.scss',
+  standalone: true
 })
 export class LandingComponent {
 

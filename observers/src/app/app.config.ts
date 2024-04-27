@@ -11,6 +11,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(CommonModule),
-    importProvidersFrom(HttpClientModule)  // Correct use without withFetch
+    importProvidersFrom(HttpClientModule),
   ]
 };

@@ -1,32 +1,32 @@
 <nav class="flex flex-col w-full">
     <div class="custom-double-border py-1"></div>
-    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-8xl font-chopin">Logo</div>
-    <div class="custom-double-border flex justify-between items-center px-1 sm:px-4">    <ul class="nav-links flex items-center text-sm sm:text-lg">
+    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-8xl font-winchester">Our Watchers</div>
+    <div class="custom-double-border flex justify-between items-center px-1 sm:px-4">
+        <ul class="nav-links flex items-center text-sm sm:text-lg">
             <li class="px-1 sm:px-2">
-                <a href="/story"
-                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
+                <a href="/story" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
             </li>
             <li class="px-1 sm:px-2">
-                <a href="/contact"
-                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
+                <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
             </li>
         </ul>
         <div class="px-1 sm:px-2 py-2 bar-home h-full border-l border-r border-l-gray-200 border-r-gray-300">
             <a href="/" class="flex items-center">
                 <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
-                <span class="text-xl sm:text-xl md:text-4xl lg:text-6xl font-semilight text-center mx-1 sm:mx-5">OUR
-                    WATCHERS</span>
+                <span class="text-xl sm:text-xl md:text-4xl lg:text-6xl font-semilight text-center mx-1 sm:mx-5">OUR WATCHERS</span>
                 <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
             </a>
         </div>
         <ul class="nav-links flex items-center text-sm sm:text-lg">
             <li class="px-1 sm:px-2">
-                <a href="/auth"
-                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Login</a>
+                <a href="/auth" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Auth</a>
             </li>
             <li class="px-1 sm:px-2">
-                <a href="/auth"
-                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Signup</a>
+                <div class="nav-links flex flex-col items-center space-y-0">
+                    
+                    <div class="text-sm sm:text-base ">{{ currentDate }}</div>
+                    <div class="text-xxs sm:text-xs ">{{ currentTime }}</div>
+                </div>
             </li>
         </ul>
     </div>
