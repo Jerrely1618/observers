@@ -1,22 +1,33 @@
-<nav class="bg-gray-800 p-2 mt-0 w-full">
-    <div class="container mx-auto flex flex-wrap items-center">
-        <div class="flex w-full md:w-1/2 justify-center md:justify-start text-white">
-            <a class="text-white no-underline hover:text-white hover:no-underline" href="#">
-                <span class="text-2xl pl-2"><i class="em em-grinning"></i>Our Watchers</span>
+<nav class="flex flex-col w-full">
+    <div class="custom-double-border py-1"></div>
+    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-8xl font-chopin">Logo</div>
+    <div class="custom-double-border flex justify-between items-center px-1 sm:px-4">    <ul class="nav-links flex items-center text-sm sm:text-lg">
+            <li class="px-1 sm:px-2">
+                <a href="/story"
+                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
+            </li>
+            <li class="px-1 sm:px-2">
+                <a href="/contact"
+                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
+            </li>
+        </ul>
+        <div class="px-1 sm:px-2 py-2 bar-home h-full border-l border-r border-l-gray-200 border-r-gray-300">
+            <a href="/" class="flex items-center">
+                <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
+                <span class="text-xl sm:text-xl md:text-4xl lg:text-6xl font-semilight text-center mx-1 sm:mx-5">OUR
+                    WATCHERS</span>
+                <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
             </a>
         </div>
-        <div class="text=white">{{pageTitle}}</div>
-        <div class="flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end">
-            <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
-                <li class="mr-3">
-                    <a class="inline-block py-2 px-4 text-white no-underline" href="#">Home</a>
-                </li>
-                <li class="mr-3">
-                    <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
-                        href="#">Link</a>
-                </li>
-                <!-- More navbar items -->
-            </ul>
-        </div>
+        <ul class="nav-links flex items-center text-sm sm:text-lg">
+            <li class="px-1 sm:px-2">
+                <a href="/auth"
+                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Login</a>
+            </li>
+            <li class="px-1 sm:px-2">
+                <a href="/auth"
+                    class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Signup</a>
+            </li>
+        </ul>
     </div>
 </nav>

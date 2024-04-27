@@ -1,3 +1,42 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@font-face {
+    font-family: 'Chopin';
+    src: url('/assets/fonts/ChopinScript.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+  @apply font-serif;
+}
+.font-chopin {
+    font-family: 'Chopin', sans-serif;
+}
+@layer components {
+    .custom-double-border {
+        @apply w-full;
+        position: relative;
+        border-top: 2px solid #f3f4f6;
+        border-bottom: 2px solid #f3f4f6;
+    }
+
+    .custom-double-border::before,
+    .custom-double-border::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #989e97;
+    }
+
+    .custom-double-border::before {
+        top: -6px;
+    }
+
+    .custom-double-border::after {
+        bottom: -6px;
+
+    }
+}
