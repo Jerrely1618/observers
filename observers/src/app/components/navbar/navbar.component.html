@@ -1,12 +1,12 @@
 <nav class="flex flex-col w-full">
     <div class="custom-double-border py-1"></div>
-    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-8xl font-winchester">Our Watchers</div>
-    <div class="custom-double-border flex justify-between items-center px-1 sm:px-4">
+    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-9xl font-winchester">Our Watchers</div>
+    <div [ngClass]="{ 'fixed': isNavbarFixed }" class="top-0 custom-double-border flex justify-between items-center px-1 sm:px-4 bg-white z-50 w-full">
         <ul class="nav-links flex items-center text-sm sm:text-lg">
             <li class="px-1 sm:px-2">
                 <a href="/story" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
             </li>
-            <li class="px-1 sm:px-2">
+            <li class="hidden sm:block px-1 sm:px-2">
                 <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
             </li>
         </ul>
@@ -23,9 +23,8 @@
             </li>
             <li class="px-1 sm:px-2">
                 <div class="nav-links flex flex-col items-center space-y-0">
-                    
-                    <div class="text-sm sm:text-base ">{{ currentDate }}</div>
-                    <div class="text-xxs sm:text-xs ">{{ currentTime }}</div>
+                    <div class="text-sm sm:text-base">{{ currentDate }}</div>
+                    <div class="text-xxs sm:text-xs">{{ currentTime }}</div>
                 </div>
             </li>
         </ul>

@@ -1,15 +1,17 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, OnInit, NgZone, HostListener } from '@angular/core';
+import { Input, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  imports: [CommonModule],
   standalone: true
 })
 export class NavbarComponent implements OnInit {
   @Input() pageTitle: string = 'Default Page Title';
-
+  isNavbarFixed = false;
   currentDate: string;
   currentTime: string;
 
@@ -25,6 +27,12 @@ export class NavbarComponent implements OnInit {
         this.zone.run(() => {}); 
       }, 1000);  
     });
+  }
+  
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isNavbarFixed = scrollPosition > 125;
   }
 
   private formatDate(date: Date): string {

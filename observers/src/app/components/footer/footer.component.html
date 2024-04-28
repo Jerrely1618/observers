@@ -1,0 +1,12 @@
+<div class="w-full">
+    <h1 class="w-full my-5 border-t border-b text-xl sm:text-xl md:text-4xl lg:text-6xl">More</h1>
+    <div class="flex overflow-x-auto snap-x snap-mandatory touch-pan-x">
+      <div class="flex-none snap-start w-1/2 sm:w-1/4 h-32 bg-gray-900 text-white flex items-center justify-center min-w-[25%]" *ngFor="let item of visibleItems">
+        Main Content {{ item }}
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <button (click)="swipeRight()">&lt;</button>
+      <button (click)="swipeLeft()">&gt;</button>
+    </div>
+  </div>
