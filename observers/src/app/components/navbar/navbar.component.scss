@@ -9,4 +9,28 @@
   .text-xs {
     font-size: 0.75rem;
   }
+  @keyframes moveLine {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
   
+  .animated-line {
+    position: relative;
+    overflow: hidden;
+    height: 4px;
+  }
+  
+  .animated-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    border-bottom: 2px dashed #989e97;
+    animation: moveLine 30s linear infinite;
+  }

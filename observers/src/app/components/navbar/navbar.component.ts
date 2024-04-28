@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isNavbarFixed = scrollPosition > 125;
+    this.isNavbarFixed = scrollPosition > 175;
   }
 
   private formatDate(date: Date): string {

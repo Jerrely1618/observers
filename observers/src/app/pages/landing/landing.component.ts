@@ -44,8 +44,8 @@ export class LandingComponent implements AfterViewInit {
     header.addEventListener('mouseleave', () => {
       anime({
         targets: header,
-        borderTopWidth: [0, 4],
-        borderBottomWidth: [0, 4],
+        borderTopWidth: [0, 2],
+        borderBottomWidth: [0, 2],
         easing: 'easeInOutQuad',
         duration: 200
       });

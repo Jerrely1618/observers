@@ -16,12 +16,38 @@
     font-weight: normal;
     font-style: normal;
 }
-
+@font-face {
+    font-family: 'Serial';
+    src: url('/assets/fonts/Serial.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Handshop';
+    src: url('/assets/fonts/Handshop.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Hamburg';
+    src: url('/assets/fonts/Hamburg.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
   @apply font-serif;
 }
+.font-handshop {
+    font-family: 'Handshop', font-serif;
+}
+.font-hamburg {
+    font-family: 'Hamburg', font-serif;
+}
 .font-chopin {
     font-family: 'Chopin', font-serif;
+}
+.font-serial {
+    font-family: 'Serial', font-serif;
 }
 .font-winchester {
     font-family: 'Winchester', font-serif;
