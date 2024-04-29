@@ -11,8 +11,11 @@ export class StoryService {
   constructor(private http: HttpClient) {}
 
   getStories(): Observable<any> {
-    return of([{ id: 1, title: 'Sample Story', content: 'This is a sample story.' }]);
-    // return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl);
+  }
+
+  getStory(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   addStory(story: any): Observable<any> {

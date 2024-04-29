@@ -1,23 +1,27 @@
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { ContactComponent } from '../../components/contact/contact.component';
-import { TopwatchersComponent } from '../../components/topwatchers/topwatchers.component';
-import { SingleAdComponent } from '../../components/single-ad/single-ad.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import anime from 'animejs';
 import { CommonModule } from '@angular/common';
+import { LandingComponent } from '../../components/landing/landing.component';
+import { StoryComponent } from '../story/story.component';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss'],
+  selector: 'app-principal',
+  templateUrl: './principal.component.html',
+  styleUrls: ['./principal.component.scss'],
   standalone: true,
-  imports: [CommonModule,NavbarComponent, FooterComponent, SingleAdComponent, ContactComponent, TopwatchersComponent]
+  imports: [StoryComponent, LandingComponent,CommonModule,NavbarComponent, FooterComponent]
 })
-export class LandingComponent implements AfterViewInit {
-
+export class PrincipalComponent implements AfterViewInit {
+  currentView: 'story' | 'landing' = 'story';
+  isSideFixed = false;
   constructor(private el: ElementRef) { }
-
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isSideFixed = scrollPosition > 190;
+  }
   ngAfterViewInit(): void {
     this.setupBorderAnimation();
   }
@@ -50,5 +54,9 @@ export class LandingComponent implements AfterViewInit {
         duration: 200
       });
     });
+    
+  }
+  changeView(view: 'landing' | 'story'): void {
+    this.currentView = view;
   }
 }

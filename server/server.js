@@ -14,7 +14,19 @@ const pool = new Pool({
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-
+app.get('/stories/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const { rows } = await pool.query('SELECT * FROM stories WHERE id = $1', [id]);
+    if (rows.length) {
+      res.json(rows[0]);
+    } else {
+      res.status(404).send({ error: 'Story not found' });
+    }
+  } catch (err) {
+    res.status(500).send({ error: 'Failed to fetch story', details: err.message });
+  }
+});
 app.get('/stories', async (req, res) => {
   try {
     const stories = await pool.query('SELECT * FROM stories');

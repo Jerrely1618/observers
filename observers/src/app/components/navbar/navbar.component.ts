@@ -1,12 +1,15 @@
 import { Component, OnInit, NgZone, HostListener } from '@angular/core';
 import { Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TopwatchersComponent } from '../topwatchers/topwatchers.component';
+import { SingleAdComponent } from '../single-ad/single-ad.component';
+import { ContactComponent } from '../contact/contact.component';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, TopwatchersComponent, SingleAdComponent, ContactComponent],
   standalone: true
 })
 export class NavbarComponent implements OnInit {

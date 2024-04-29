@@ -1,5 +1,10 @@
-<h2>Stories</h2>
-<div *ngFor="let story of stories">
-  <h3>{{ story.title }}</h3>
-  <p>{{ story.content }}</p>
+<div *ngIf="story" class="flex flex-col w-full h-full overflow-y-auto px-5 pt-10 bg-base-100 rounded-lg shadow-sm min-h-[75vh]">
+  <h2 class="text-2xl font-semibold text-base-content">{{ story.title }}</h2>
+  <p class="text-sm text-base-content mt-2">
+    Written by <span class="font-medium">{{ story.author }}</span>
+    on <span class="font-medium">{{ story.created_at | date:'mediumDate' }}</span>
+  </p>
+  <div class="flex-grow text-base-content text-base leading-relaxed p-5">
+    <span class=" text-4xl font-bold ml-4">{{ firstLetter }}</span><span>{{ restOfContent }}</span>
+  </div>
 </div>
