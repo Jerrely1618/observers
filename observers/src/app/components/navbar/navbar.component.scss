@@ -17,7 +17,9 @@
       transform: translateX(100%);
     }
   }
-  
+  .z-100 {
+    z-index: 100;
+}
   .animated-line {
     position: relative;
     overflow: hidden;
