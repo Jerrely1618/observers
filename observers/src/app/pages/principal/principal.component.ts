@@ -5,16 +5,17 @@ import anime from 'animejs';
 import { CommonModule } from '@angular/common';
 import { LandingComponent } from '../../components/landing/landing.component';
 import { StoryComponent } from '../story/story.component';
+import { StoriesComponent } from '../stories/stories.component';
 
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
   styleUrls: ['./principal.component.scss'],
   standalone: true,
-  imports: [StoryComponent, LandingComponent,CommonModule,NavbarComponent, FooterComponent]
+  imports: [StoryComponent, StoriesComponent,LandingComponent,CommonModule,NavbarComponent, FooterComponent]
 })
 export class PrincipalComponent implements AfterViewInit {
-  currentView: 'story' | 'landing' = 'story';
+  currentView: 'story' | 'landing' | 'stories' = 'stories';
   isSideFixed = false;
   constructor(private el: ElementRef) { }
   @HostListener('window:scroll', [])

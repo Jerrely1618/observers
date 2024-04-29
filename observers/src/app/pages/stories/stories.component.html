@@ -1,0 +1,7 @@
+<div class="z-100 flex flex-col w-full h-full overflow-y-auto px-5 mt-10 bg-base-100 rounded-lg shadow-sm min-h-[75vh]">
+    <textarea class=" w-full mb-4" placeholder="Search stories by name or author..." [formControl]="searchControl"></textarea>
+    <div *ngFor="let story of stories$ | async" class="mb-4">
+        <h3>{{ story.title }} - {{ story.author }}</h3>
+        <p>{{ story.content }}</p>
+    </div>
+</div>

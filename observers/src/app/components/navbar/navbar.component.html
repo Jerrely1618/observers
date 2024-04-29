@@ -1,11 +1,12 @@
 <nav class="flex flex-col w-full">
     <div class="custom-double-border py-1"></div>
-    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-9xl font-winchester">OW</div>
+    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-9xl font-winchester">Our Watchers</div>
     <div class="animated-line"></div>
-    <div [ngClass]="{ 'fixed': isNavbarFixed }" class="z-50 top-0 left-0 right-0">
+    <div [ngClass]="{'fixed': isNavbarFixed, 'z-100': isNavbarFixed}" class="z-10 top-0 left-0 right-0">
+
             <!-- Top -->
-            <div class=" w-full">
-            <div class="my-1 flex justify-between items-center px-1 sm:px-4 bg-white ">
+            <div class=" w-full ">
+            <div class="my-1 flex z-0 justify-between items-center px-1 sm:px-4 bg-white ">
                 <ul class="nav-links flex items-center text-sm sm:text-lg">
                     <li class="px-1 sm:px-2">
                         <a href="/story" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
@@ -37,7 +38,7 @@
             <div class="w-full h-full grid grid-cols-6 gap-0">
                 <!-- Left Column -->
                 <div class="hidden sm:flex col-span-1 h-full">
-                    <div class="w-full h-full z-10">
+                    <div class="w-full h-full z-0">
                         <div class="aspect-w-1 aspect-h-1">
                             <h1 class="text-xs sm:text-sm md:text-xl lg:text-2xl mx-5 py-8 text-center tracking-widest border-t-2 border-t-secondary border-b-2 border-b-secondary font-bold">WORLD WIDE</h1>
                             <p class="text-xs text-justify p-2 my-2">
@@ -52,11 +53,11 @@
                         <app-single-ad></app-single-ad>
                     </div>
                 </div>
-                <div class="col-span-4"> 
+                <div class="col-span-4 z-0"> 
                 </div>
                 <!-- Right Column -->
                 <div class="hidden sm:flex col-span-1 h-full">
-                    <div class=" w-full h-full z-10">
+                    <div class=" w-full h-full z-0">
                         <app-single-ad></app-single-ad>
                         <app-contact></app-contact>
                         <app-single-ad></app-single-ad>

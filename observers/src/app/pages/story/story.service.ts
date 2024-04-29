@@ -10,10 +10,6 @@ export class StoryService {
 
   constructor(private http: HttpClient) {}
 
-  getStories(): Observable<any> {
-    return this.http.get(this.apiUrl);
-  }
-
   getStory(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }

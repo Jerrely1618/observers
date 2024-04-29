@@ -9,8 +9,9 @@
             <div class="col-span-6 sm:col-span-4 ml-5 h-full">
                 <app-landing *ngIf="currentView === 'landing'" class="h-full"></app-landing>
                 <app-story *ngIf="currentView === 'story'" class="flex flex-col overflow-y-auto"></app-story>
+                <app-stories *ngIf="currentView === 'stories'" class="flex flex-col overflow-y-auto"></app-stories>
                 <app-footer ></app-footer>
-            </div>
+            </div> 
             <div class="col-span-1 hidden sm:flex"> 
             </div>
         </div>
