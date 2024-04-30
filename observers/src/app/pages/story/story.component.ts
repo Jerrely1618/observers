@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges  } from '@angular/core';
 import { StoryService } from './story.service';
 
 interface Story {
@@ -19,8 +19,13 @@ export class StoryComponent implements OnInit {
   story?: Story;
   firstLetter: string = '';
   restOfContent: string = '';
+  @Input() storyId?: number;
   ngOnInit(): void {
-    this.loadStory(1);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['storyId'] && this.storyId != null) {
+      this.loadStory(this.storyId);
+    }
   }
   constructor(private storyService: StoryService) {}
   loadStory(id: number): void {
@@ -34,5 +39,6 @@ export class StoryComponent implements OnInit {
       },
       error => console.error('There was an error!', error)
     );
+    console.log('Loading story with id:', id);
   }
 }

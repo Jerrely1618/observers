@@ -1,7 +1,22 @@
-<div class="z-100 flex flex-col w-full h-full overflow-y-auto px-5 mt-10 bg-base-100 rounded-lg shadow-sm min-h-[75vh]">
-    <textarea class=" w-full mb-4" placeholder="Search stories by name or author..." [formControl]="searchControl"></textarea>
-    <div *ngFor="let story of stories$ | async" class="mb-4">
-        <h3>{{ story.title }} - {{ story.author }}</h3>
-        <p>{{ story.content }}</p>
+<div class="flex flex-col min-h-[75vh]">
+    <div class="flex items-center rounded-full shadow-lg relative">
+        <i class="fas fa-search absolute text-gray-400 ml-4"></i>
+        <textarea
+            class="form-textarea resize-none w-auto min-w-full max-w-2xl rounded-3xl py-2 pl-14 pr-20 outline-none"
+            placeholder="Search stories by name or author..."
+            [(ngModel)]="searchText"
+            (keydown.enter)="searchStories($event)"
+            (input)="adjustTextareaHeight($any($event.target))"
+            rows="1"></textarea>
+        <button *ngIf="searchText" (click)="clearSearch()" class="absolute right-14">
+            <i class="fas fa-times-circle text-gray-400"></i>
+        </button>
+        <button (click)="startSpeechRecognition()" class="absolute right-6">
+            <i class="fas fa-microphone text-gray-400"></i>
+        </button>
+    </div>
+    <div *ngFor="let story of stories$ | async" class="mt-4 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" (click)="onStoryClick(story.id)">
+        <h3 class="text-lg font-semibold">{{ story.title }}</h3>
+        <p class="text-sm">{{ story.author }}</p>
     </div>
 </div>

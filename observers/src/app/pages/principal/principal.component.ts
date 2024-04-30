@@ -15,9 +15,17 @@ import { StoriesComponent } from '../stories/stories.component';
   imports: [StoryComponent, StoriesComponent,LandingComponent,CommonModule,NavbarComponent, FooterComponent]
 })
 export class PrincipalComponent implements AfterViewInit {
-  currentView: 'story' | 'landing' | 'stories' = 'stories';
+  currentView: 'story' | 'landing' | 'stories' = 'landing';
   isSideFixed = false;
+  selectedStoryId?: number;
   constructor(private el: ElementRef) { }
+  onStorySelected(storyId: number): void {
+    this.currentView = 'story';
+    this.selectedStoryId = storyId;
+  }
+  onStoriesViewed(): void {
+    this.currentView = 'stories';
+  }
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;

@@ -5,60 +5,68 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-    user: process.env.PG_USER,
-    host: process.env.PG_HOST,
-    database: process.env.PG_DATABASE,
-    password: process.env.PG_PASSWORD,
-    port: process.env.PG_PORT,
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
 });
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Fetch stories with optional search filter
 app.get('/stories', async (req, res) => {
   const search = req.query.search;
+  let query = `
+    SELECT s.*, u.username as author 
+    FROM stories s
+    LEFT JOIN users u ON s.author_id = u.id`;
+  let params = [];
+  if (search) {
+    query += ` WHERE s.title ILIKE $1 OR u.username ILIKE $2 OR s.content ILIKE $3`;
+    params = [`%${search}%`, `%${search}%`, `%${search}%`];
+    query += ` ORDER BY CASE 
+      WHEN s.title ILIKE $1 THEN 1 
+      WHEN u.username ILIKE $2 THEN 2 
+      WHEN s.content ILIKE $3 THEN 3 
+      ELSE 4 
+    END, s.created_at DESC`;
+  } else {
+    query += ' ORDER BY s.created_at DESC';
+  }
   try {
-    let query = 'SELECT * FROM stories';
-    let params = [];
-    if (search) {
-      query += ' WHERE title ILIKE $1 OR author ILIKE $1';
-      params.push(`%${search}%`);
-    }
     const stories = await pool.query(query, params);
     res.json(stories.rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Query error:', err.message);
+    res.status(500).json({ error: 'Internal Server Error', details: err.message });
   }
 });
 
-// Fetch a single story by ID
 app.get('/stories/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   try {
-    const { rows } = await pool.query('SELECT * FROM stories WHERE id = $1', [id]);
-    if (rows.length) {
-      res.json(rows[0]);
+    const result = await pool.query('SELECT * FROM stories WHERE id = $1', [id]);
+    if (result.rows.length) {
+      res.json(result.rows[0]);
     } else {
       res.status(404).send({ error: 'Story not found' });
     }
   } catch (err) {
+    console.error('Query error:', err.message);
     res.status(500).send({ error: 'Failed to fetch story', details: err.message });
   }
 });
 
-// Create a new story
 app.post('/stories', async (req, res) => {
   const { title, content } = req.body;
   try {
-    const newStory = await pool.query(
-      'INSERT INTO stories (title, content) VALUES ($1, $2) RETURNING *',
-      [title, content]
-    );
-    res.json(newStory.rows[0]);
+    const result = await pool.query('INSERT INTO stories (title, content) VALUES ($1, $2) RETURNING *', [title, content]);
+    res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Insert error:', err.message);
+    res.status(500).json({ error: 'Failed to create story', details: err.message });
   }
 });
 

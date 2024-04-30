@@ -1,5 +1,4 @@
-import { Component, OnInit, NgZone, HostListener } from '@angular/core';
-import { Input, NgModule } from '@angular/core';
+import { Component, Input,ViewChild,ElementRef, EventEmitter, OnInit, NgZone, HostListener, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TopwatchersComponent } from '../topwatchers/topwatchers.component';
 import { SingleAdComponent } from '../single-ad/single-ad.component';
@@ -14,15 +13,42 @@ import { ContactComponent } from '../contact/contact.component';
 })
 export class NavbarComponent implements OnInit {
   @Input() pageTitle: string = 'Default Page Title';
+  @Output() storiesView = new EventEmitter<string>();
   isNavbarFixed = false;
   currentDate: string;
   currentTime: string;
+  @ViewChild('navbarElement') navbarElement!: ElementRef;
 
   constructor(private zone: NgZone) {
     this.currentDate = this.formatDate(new Date());
     this.currentTime = this.formatTime(new Date());
   }
+  ngAfterViewInit() {
+    this.logInitialPosition();
+  }
 
+  logInitialPosition() {
+    if (this.navbarElement) {
+      const navbarHeight = this.navbarElement.nativeElement.offsetHeight;
+      console.log('Initial navbar height:', navbarHeight);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event:any) {
+    if (!this.isNavbarFixed) {
+      const navbarHeight = this.navbarElement.nativeElement.offsetHeight;
+      console.log('Navbar height on resize:', navbarHeight);
+    }
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.isNavbarFixed = scrollPosition > 175;
+  }
+  onStoriesView(): void {
+    this.storiesView.emit('stories');
+  }
   ngOnInit(): void {
     this.zone.runOutsideAngular(() => {
       setInterval(() => {
@@ -30,12 +56,6 @@ export class NavbarComponent implements OnInit {
         this.zone.run(() => {}); 
       }, 1000);  
     });
-  }
-  
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isNavbarFixed = scrollPosition > 175;
   }
 
   private formatDate(date: Date): string {

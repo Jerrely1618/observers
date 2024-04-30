@@ -1,41 +1,45 @@
-<nav class="flex flex-col w-full">
-    <div class="custom-double-border py-1"></div>
-    <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-9xl font-winchester">Our Watchers</div>
-    <div class="animated-line"></div>
-    <div [ngClass]="{'fixed': isNavbarFixed, 'z-100': isNavbarFixed}" class="top-0 left-0 right-0">
-
+<nav class=" flex flex-col w-full">
+    
+    <div class="">
+        <div class="custom-double-border py-1"></div>
+        <div class="w-full text-center my-2 sm:my-5 text-4xl sm:text-6xl md:text-9xl font-winchester">Our Watchers</div>
+        <div class="animated-line"></div>
+        <div [ngClass]="{'fixed': isNavbarFixed, 'z-100': isNavbarFixed}" class="top-0 left-0 right-0">
             <!-- Top -->
-            <div class=" w-full ">
-            <div class="my-1 flex z-0 justify-between items-center px-1 sm:px-4 bg-white ">
-                <ul class="nav-links flex items-center text-sm sm:text-lg">
-                    <li class="px-1 sm:px-2">
-                        <a href="/story" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
-                    </li>
-                    <li class="hidden sm:block px-1 sm:px-2">
-                        <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
-                    </li>
-                </ul>
-                <div class="px-1 sm:px-2 py-2 bar-home h-full border-l border-r border-l-gray-200 border-r-gray-300">
-                    <a href="/" class="flex items-center">
-                        <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
-                        <span class="text-4xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-8xl font-semilight text-center mx-1 sm:mx-5">OUR WATCHERS</span>
-                        <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
-                    </a>
+            <div class=" w-full"  >
+                <div #navbarElement class="my-1 flex z-0 justify-between items-center px-1 sm:px-4 bg-base-100 dark:bg-base-150">
+                    <ul class="nav-links flex items-center text-sm sm:text-lg">
+                        
+                        <li class="px-3 sm:px-2">
+                            <a href="/auth" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Auth</a>
+                        </li>
+                        <li class="hidden sm:block px-1 sm:px-2">
+                            <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
+                        </li>
+                    </ul>
+                    <div class="px-1 sm:px-2 py-2 bar-home h-full border-l border-r border-l-gray-200 border-r-gray-300">
+                        <a href="/" class="flex items-center">
+                            <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
+                            <span class="text-4xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-8xl font-semilight text-center mx-1 sm:mx-5">OUR WATCHERS</span>
+                            <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
+                        </a>
+                    </div>
+                    <ul class="nav-links flex items-center text-sm sm:text-lg">
+                        <li (click)="onStoriesView()" class="hidden sm:block px-1 sm:px-2">
+                            <a  class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
+                        </li>
+                        <li class="hidden sm:block  px-1 sm:px-2">
+                            <div class="nav-links flex flex-col items-center space-y-0">
+                                <div class="text-sm sm:text-base">{{ currentDate }}</div>
+                                <div class="text-xxs sm:text-xs">{{ currentTime }}</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <label for="my-drawer" class="block sm:hidden drawer-button px-3 sm:px-2">More</label>
+
                 </div>
-                <ul class="nav-links flex items-center text-sm sm:text-lg">
-                    <li class="px-1 sm:px-2">
-                        <a href="/auth" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Auth</a>
-                    </li>
-                    <li class="hidden sm:block  px-1 sm:px-2">
-                        <div class="nav-links flex flex-col items-center space-y-0">
-                            <div class="text-sm sm:text-base">{{ currentDate }}</div>
-                            <div class="text-xxs sm:text-xs">{{ currentTime }}</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="animated-line mb-5"></div>
-            <div class="w-full h-full grid grid-cols-6 gap-0">
+                <div class="animated-line mb-5"></div>
+                <div class="w-full h-full grid grid-cols-6 gap-0">
                 <!-- Left Column -->
                 <div class="hidden sm:flex col-span-1 h-full">
                     <div class="w-full h-full z-0">
@@ -43,28 +47,29 @@
                             <h1 class="text-xs sm:text-sm md:text-xl lg:text-2xl mx-5 py-8 text-center tracking-widest border-t-2 border-t-secondary border-b-2 border-b-secondary font-bold">WORLD WIDE</h1>
                             <p class="text-xs text-justify p-2 my-2">
                                 The Watchers. From the bustling streets of grand cities to the quiet hamlets nestled amidst rolling hills, they stand as custodians of our collective history, chronicling the moments that define our shared humanity.
-                            </p>
-                            <p class="mx-16 border-t border-t-secondary"></p>
-                            <p class="text-xs text-justify p-2 my-2">
-                                Join us, and add your voice to us—where every observation holds the promise of unlocking the secrets of our world.
-                            </p>
+                                </p>
+                                <p class="mx-16 border-t border-t-secondary"></p>
+                                <p class="text-xs text-justify p-2 my-2">
+                                    Join us, and add your voice to us—where every observation holds the promise of unlocking the secrets of our world.
+                                </p>
+                            </div>
+                            <app-topwatchers></app-topwatchers>
+                            <app-single-ad></app-single-ad>
                         </div>
-                        <app-topwatchers></app-topwatchers>
-                        <app-single-ad></app-single-ad>
+                    </div>
+                    <div class="col-span-4 z-0"> 
+                    </div>
+                    <!-- Right Column -->
+                    <div class="hidden sm:flex col-span-1 h-full">
+                        <div class=" w-full h-full z-0">
+                            <app-single-ad></app-single-ad>
+                            <app-contact></app-contact>
+                            <app-single-ad></app-single-ad>
+                        </div>
                     </div>
                 </div>
-                <div class="col-span-4 z-0"> 
-                </div>
-                <!-- Right Column -->
-                <div class="hidden sm:flex col-span-1 h-full">
-                    <div class=" w-full h-full z-0">
-                        <app-single-ad></app-single-ad>
-                        <app-contact></app-contact>
-                        <app-single-ad></app-single-ad>
-                    </div>
-                </div>
-            </div>
             </div>
         </div>
-        
+    </div>
+    
 </nav>

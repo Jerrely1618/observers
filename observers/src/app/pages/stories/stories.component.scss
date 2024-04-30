@@ -1,0 +1,6 @@
+.form-textarea {
+    overflow: auto; /* Allow scrollbar if necessary */
+    min-height: 38px; /* Minimum height */
+    height: auto; /* Adjust height automatically */
+    max-height: 150px; /* Maximum height before scrolling */
+}

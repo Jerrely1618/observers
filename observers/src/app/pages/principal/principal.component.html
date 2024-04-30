@@ -1,23 +1,35 @@
-<div class="p-5 h-full flex flex-col">
-    <app-navbar [pageTitle]="'Landing Page'"></app-navbar>
-
-    <div class="flex-grow overflow-hidden">
-        <div class="absolute inset-0 -pl-4 top-48 sm:top-72 p-0 sm:p-5">
-            <div class="w-full h-full grid grid-cols-6 gap-0">
-                <div class="col-span-1 hidden sm:flex">
-            </div>
-            <div class="col-span-6 sm:col-span-4 ml-5 h-full">
-                <app-landing *ngIf="currentView === 'landing'" class="h-full"></app-landing>
-                <app-story *ngIf="currentView === 'story'" class="flex flex-col overflow-y-auto"></app-story>
-                <app-stories *ngIf="currentView === 'stories'" class="flex flex-col overflow-y-auto"></app-stories>
-                <app-footer ></app-footer>
-            </div> 
-            <div class="col-span-1 hidden sm:flex"> 
+<div class="drawer p-5 h-full flex flex-col">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content">
+        <app-navbar (storiesView)="onStoriesViewed()" [pageTitle]="'Landing Page'"></app-navbar>
+        <div class="flex-grow overflow-hidden">
+            <div class="absolute inset-0 -pl-4 top-48 sm:top-72 p-0 sm:p-5">
+                <div class="w-full h-full grid grid-cols-6 gap-0">
+                    <div class="col-span-1 hidden sm:flex"></div>
+                    <div class="col-span-6 sm:col-span-4 mx-5 h-full">
+                        <app-landing *ngIf="currentView === 'landing'" class="h-full"></app-landing>
+                        <app-story *ngIf="currentView === 'story'"  [storyId]="selectedStoryId" class="flex flex-col overflow-y-auto"></app-story>
+                        <app-stories *ngIf="currentView === 'stories'" (storySelected)="onStorySelected($event)" class="flex flex-col overflow-y-auto"></app-stories>
+                        <app-footer ></app-footer>
+                    </div> 
+                    <div class="col-span-1 hidden sm:flex"></div>
+                </div>
             </div>
         </div>
-        
     </div>
-    
-    
+    <div class="drawer-side">
+        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <li class=" px-1 sm:px-2">
+                <a href="/auth" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Auth</a>
+            </li>
+            <li class=" px-1 sm:px-2">
+                <a href="/story" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
+            </li>
+            <li class=" px-1 sm:px-2">
+                <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
+            </li>
+        </ul>
+    </div>
     
 </div>

@@ -12,10 +12,7 @@ export class StoriesService {
   constructor(private http: HttpClient) { }
 
   getStories(query?: string): Observable<any[]> {
-    let url = this.apiUrl;
-    if (query) {
-      url += `?search=${query}`;
-    }
+    const url = this.apiUrl + (query ? `?search=${encodeURIComponent(query)}` : '');
     return this.http.get<any[]>(url);
   }
 }

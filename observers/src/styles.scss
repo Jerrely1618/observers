@@ -3,7 +3,8 @@
 @import "tailwindcss/utilities";
 @import 'swiper/css';
 @import 'swiper/css/navigation';
-@import 'swiper/css/pagination'; 
+@import 'swiper/css/pagination';
+@import '@fortawesome/fontawesome-free/css/all.css';
 @font-face {
     font-family: 'Chopin';
     src: url('/assets/fonts/ChopinScript.otf') format('opentype');
