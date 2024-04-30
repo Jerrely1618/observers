@@ -14,6 +14,7 @@ import { ContactComponent } from '../contact/contact.component';
 export class NavbarComponent implements OnInit {
   @Input() pageTitle: string = 'Default Page Title';
   @Output() storiesView = new EventEmitter<string>();
+  @Output() bottomNav = new EventEmitter<number>();
   isNavbarFixed = false;
   currentDate: string;
   currentTime: string;
@@ -29,16 +30,20 @@ export class NavbarComponent implements OnInit {
 
   logInitialPosition() {
     if (this.navbarElement) {
+      const navbarTop = this.navbarElement.nativeElement.offsetTop;
       const navbarHeight = this.navbarElement.nativeElement.offsetHeight;
-      console.log('Initial navbar height:', navbarHeight);
+      const navbarBottomFromTop = navbarTop + navbarHeight;
+      this.bottomNav.emit(navbarBottomFromTop);
     }
   }
-
+  
   @HostListener('window:resize', ['$event'])
-  onResize(event:any) {
-    if (!this.isNavbarFixed) {
+  onResize(event: any) {
+    if (!this.isNavbarFixed && this.navbarElement) {
+      const navbarTop = this.navbarElement.nativeElement.offsetTop;
       const navbarHeight = this.navbarElement.nativeElement.offsetHeight;
-      console.log('Navbar height on resize:', navbarHeight);
+      const navbarBottomFromTop = navbarTop + navbarHeight;
+      this.bottomNav.emit(navbarBottomFromTop);
     }
   }
   @HostListener('window:scroll', [])

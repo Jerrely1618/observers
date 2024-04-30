@@ -1,6 +1,6 @@
+import { Component, AfterViewInit, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { Component, AfterViewInit, ElementRef, HostListener } from '@angular/core';
 import anime from 'animejs';
 import { CommonModule } from '@angular/common';
 import { LandingComponent } from '../../components/landing/landing.component';
@@ -12,27 +12,40 @@ import { StoriesComponent } from '../stories/stories.component';
   templateUrl: './principal.component.html',
   styleUrls: ['./principal.component.scss'],
   standalone: true,
-  imports: [StoryComponent, StoriesComponent,LandingComponent,CommonModule,NavbarComponent, FooterComponent]
+  imports: [StoryComponent, StoriesComponent, LandingComponent, CommonModule, NavbarComponent, FooterComponent]
 })
 export class PrincipalComponent implements AfterViewInit {
   currentView: 'story' | 'landing' | 'stories' = 'landing';
   isSideFixed = false;
   selectedStoryId?: number;
-  constructor(private el: ElementRef) { }
+  mainContentTop: number = 0;
+
+  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) { }
+
   onStorySelected(storyId: number): void {
     this.currentView = 'story';
     this.selectedStoryId = storyId;
   }
+
   onStoriesViewed(): void {
     this.currentView = 'stories';
   }
+
+  adjustMainContentPosition(navBottom: number): void {
+    this.mainContentTop = navBottom;
+    this.cdr.detectChanges();
+    console.log('Main content top:', this.mainContentTop);
+  }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     this.isSideFixed = scrollPosition > 190;
   }
+
   ngAfterViewInit(): void {
     this.setupBorderAnimation();
+    this.cdr.detectChanges();
   }
 
   private setupBorderAnimation(): void {
@@ -42,7 +55,7 @@ export class PrincipalComponent implements AfterViewInit {
       this.setupAnimationForHeader(header);
     }
   }
-  
+
   private setupAnimationForHeader(header: Element): void {
     header.addEventListener('mouseenter', () => {
       anime({
@@ -53,7 +66,7 @@ export class PrincipalComponent implements AfterViewInit {
         duration: 200
       });
     });
-  
+
     header.addEventListener('mouseleave', () => {
       anime({
         targets: header,
@@ -63,8 +76,8 @@ export class PrincipalComponent implements AfterViewInit {
         duration: 200
       });
     });
-    
   }
+
   changeView(view: 'landing' | 'story'): void {
     this.currentView = view;
   }
