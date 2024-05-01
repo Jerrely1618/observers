@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
+const { expressjwt: jwt } = require('express-jwt'); 
+const jwksRsa = require('jwks-rsa');
 require('dotenv').config();
 
 const pool = new Pool({
@@ -16,6 +18,31 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+  }),
+  audience: process.env.AUTH0_AUDIENCE,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ['RS256']
+});
+
+app.post('/api/users', checkJwt, async (req, res) => {
+  const { user_metadata } = req.body;
+  try {
+    const newUser = await pool.query(
+      'INSERT INTO users (email, name) VALUES ($1, $2) RETURNING *',
+      [user_metadata.email, user_metadata.name]
+    );
+    res.json(newUser.rows[0]);
+  } catch (error) {
+    console.error('Error saving user:', error);
+    res.status(500).send('Server error');
+  }
+});
 app.get('/stories', async (req, res) => {
   const search = req.query.search;
   let query = `

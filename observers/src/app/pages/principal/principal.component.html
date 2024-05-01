@@ -3,7 +3,7 @@
     <div class="drawer-content">
         <app-navbar (storiesView)="onStoriesViewed()" (bottomNav)="adjustMainContentPosition($event)" [pageTitle]="'Landing Page'"></app-navbar>
         <div class="flex-grow overflow-hidden">
-            <div [style.margin-top.px]="mainContentTop" class="absolute inset-0 -pl-4  p-0 sm:p-5">
+            <div [style.margin-top.px]="mainContentTop" class="absolute inset-0 -pl-4 p-0 sm:p-5">
                 <div class="w-full h-full grid grid-cols-6 gap-0">
                     <div class="col-span-1 hidden sm:flex"></div>
                     <div class="col-span-6 sm:col-span-4 mx-5 h-full">

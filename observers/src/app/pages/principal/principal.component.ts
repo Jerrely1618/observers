@@ -34,7 +34,6 @@ export class PrincipalComponent implements AfterViewInit {
   adjustMainContentPosition(navBottom: number): void {
     this.mainContentTop = navBottom;
     this.cdr.detectChanges();
-    console.log('Main content top:', this.mainContentTop);
   }
 
   @HostListener('window:scroll', [])
