@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
-const { expressjwt: jwt } = require('express-jwt'); 
-const jwksRsa = require('jwks-rsa');
+const jwt = require('jsonwebtoken');
+const jwksClient = require('jwks-rsa');
 require('dotenv').config();
 
 const pool = new Pool({
@@ -18,24 +18,43 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
-  }),
-  audience: process.env.AUTH0_AUDIENCE,
-  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-  algorithms: ['RS256']
+const client = jwksClient({
+  jwksUri: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/.well-known/jwks.json'
+});
+function getKey(header, callback){
+  client.getSigningKey(header.kid, (err, key) => {
+    var signingKey = key.publicKey || key.rsaPublicKey;
+    callback(null, signingKey);
+  });
+}
+
+app.use((req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  jwt.verify(token, getKey, {
+    audience: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/api/v2/',
+    issuer: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/',
+    algorithms: ['RS256']
+  }, (err, decoded) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    req.user = decoded;
+    next();
+  });
 });
 
-app.post('/api/users', checkJwt, async (req, res) => {
-  const { user_metadata } = req.body;
+app.post('/api/users', async (req, res) => {
+  const { email, name } = req.body;
   try {
+    console.log('Creating user:', email, name)
+    const exists = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (exists.rows.length) {
+      return res.status(409).send({ error: 'User already exists' });
+    }
     const newUser = await pool.query(
       'INSERT INTO users (email, name) VALUES ($1, $2) RETURNING *',
-      [user_metadata.email, user_metadata.name]
+      [email, name]
     );
     res.json(newUser.rows[0]);
   } catch (error) {

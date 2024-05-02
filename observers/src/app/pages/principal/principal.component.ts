@@ -1,18 +1,18 @@
 import { Component, AfterViewInit, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { FooterComponent } from '../../components/footer/footer.component';
 import anime from 'animejs';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { AuthComponent } from '../../auth/auth.component';
+import { StoryComponent } from '../../components/story/story.component';
 import { LandingComponent } from '../../components/landing/landing.component';
-import { StoryComponent } from '../story/story.component';
-import { StoriesComponent } from '../stories/stories.component';
-
+import { StoriesComponent } from '../../components/stories/stories.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
   styleUrls: ['./principal.component.scss'],
   standalone: true,
-  imports: [StoryComponent, StoriesComponent, LandingComponent, CommonModule, NavbarComponent, FooterComponent]
+  imports: [StoryComponent, AuthComponent,StoriesComponent, LandingComponent, CommonModule, NavbarComponent, FooterComponent]
 })
 export class PrincipalComponent implements AfterViewInit {
   currentView: 'story' | 'landing' | 'stories' = 'landing';

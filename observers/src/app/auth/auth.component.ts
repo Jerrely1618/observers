@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthServicesComponent } from './auth.service';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-auth',
@@ -9,12 +9,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './auth.component.scss'
 })
 export class AuthComponent {
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthServicesComponent) {}
   login(): void {
     this.authService.login();
   }
 
   signup(): void {
-    this.authService.login('signup');
+    this.authService.signup();
   }
 }

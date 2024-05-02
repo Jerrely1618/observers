@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TopwatchersComponent } from '../topwatchers/topwatchers.component';
 import { SingleAdComponent } from '../single-ad/single-ad.component';
 import { ContactComponent } from '../contact/contact.component';
+import { AuthComponent } from '../../auth/auth.component';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [CommonModule, TopwatchersComponent, SingleAdComponent, ContactComponent],
+  imports: [CommonModule, AuthComponent,TopwatchersComponent, SingleAdComponent, ContactComponent],
   standalone: true
 })
 export class NavbarComponent implements OnInit {
