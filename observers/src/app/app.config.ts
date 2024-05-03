@@ -19,6 +19,7 @@ export const appConfig: ApplicationConfig = {
         redirect_uri: 'https://localhost:4200/callback',
         audience: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/api/v2/'
       }
+      
     }),
   ]
 };

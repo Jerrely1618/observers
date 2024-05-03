@@ -76,21 +76,27 @@ export class AuthServicesComponent {
   }
 
   private createUserInDatabase(user: any): void {
-    this.auth0Client?.getIdTokenClaims().then((tokenClaims: any) => {
+    console.log(user);
+    this.auth0Client?.getTokenSilently({authorizationParams:{
+      scope: 'read:orders write:orders', 
+      audience: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/api/v2/',
+  }}).then((token: string) => {
       const headers = {
-        Authorization: `Bearer ${tokenClaims.__raw}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
       };
-      console.log('Sending headers:', headers); // Log headers
-      this.http.post(`${this.apiUrl}/users`, {
-        email: user.email,
-        name: user.name
-      }, { headers }).subscribe({
-        next: (response) => console.log('User created in database:', response),
-        error: (err) => console.error('Error creating user in database:', err)
+      const userData = {
+          email: user.email,
+          username: user.nickname || 'defaultUsername'
+      };
+      console.log('Sending headers and data:', headers, userData);
+      this.http.post(`${this.apiUrl}/users`, userData, { headers }).subscribe({
+          next: (response) => console.log('User created in database:', response),
+          error: (err) => console.error('Error creating user in database:', err)
       });
-    }).catch(error => {
-      console.error('Error retrieving token:', error);
-    });
+  }).catch((error: any) => {
+      console.error('Error retrieving access token:', error);
+  });
   }
 
   private async checkAuthenticationStatus() {

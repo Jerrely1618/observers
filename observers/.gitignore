@@ -5,12 +5,14 @@
 /tmp
 /out-tsc
 /bazel-out
-/environments
+
 # Node
 /node_modules
 npm-debug.log
 yarn-error.log
 /ssl
+
+
 # IDEs and editors
 .idea/
 .project
@@ -40,3 +42,11 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# ENVS
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+/app/enviroment.ts
