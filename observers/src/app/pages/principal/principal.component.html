@@ -8,8 +8,6 @@
                     <div class="col-span-1 hidden sm:flex"></div>
                     <div class="col-span-6 sm:col-span-4 mx-5 h-full">
                         <app-landing *ngIf="currentView === 'landing'" class="h-full"></app-landing>
-                        <app-story *ngIf="currentView === 'story'"  [storyId]="selectedStoryId" class="flex flex-col overflow-y-auto"></app-story>
-                        <app-stories *ngIf="currentView === 'stories'" (storySelected)="onStorySelected($event)" class="flex flex-col overflow-y-auto"></app-stories>
                         <app-footer ></app-footer>
                     </div> 
                     <div class="col-span-1 hidden sm:flex"></div>
@@ -21,10 +19,7 @@
         <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
             <li class=" px-1 sm:px-2">
-                <a class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Auth</a>
-            </li>
-            <li class=" px-1 sm:px-2">
-                <a (click)="onStoriesViewed()" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
+                <a href="/stories" class="cursor-pointer text-sm sm:text-lg md:text-2xl text-dark ">Stories</a>
             </li>
             <li class=" px-1 sm:px-2">
                 <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>

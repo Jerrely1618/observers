@@ -7,9 +7,7 @@ require('dotenv').config();
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const storyRoutes = require('./routes/storyRoutes');
-const helmet = require('helmet');
 
-app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(userRoutes);

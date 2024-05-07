@@ -73,18 +73,17 @@
           "options": {
             "ssl": true,
             "sslKey": "./ssl/localhost+2-key.pem",
-            "sslCert": "./ssl/localhost+2.pem",
-            "browserTarget": "observers:build:development"
+            "sslCert": "./ssl/localhost+2.pem"
           },
           "configurations": {
             "production": {
-              "browserTarget": "observers:build:production",
+              "buildTarget": "observers:build:production",
               "ssl": true,
               "sslKey": "./ssl/localhost+2-key.pem",
               "sslCert": "./ssl/localhost+2.pem"
             },
             "development": {
-              "browserTarget": "observers:build:development",
+              "buildTarget": "observers:build:development",
               "ssl": true,
               "sslKey": "./ssl/localhost+2-key.pem",
               "sslCert": "./ssl/localhost+2.pem"

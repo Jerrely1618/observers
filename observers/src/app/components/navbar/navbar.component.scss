@@ -23,7 +23,7 @@
   .animated-line {
     position: relative;
     overflow: hidden;
-    height: 4px;
+    height: 7px;
   }
   
   .animated-line::before {
@@ -32,7 +32,7 @@
     top: 0;
     left: 0;
     width: 200%;
-    height: 100%;
-    border-bottom: 2px dashed #989e97;
-    animation: moveLine 30s linear infinite;
+    height: 40%;
+    border-bottom: 5px double #989e97;
+    animation: moveLine 10s linear infinite;
   }

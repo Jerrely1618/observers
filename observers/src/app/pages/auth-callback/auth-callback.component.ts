@@ -19,13 +19,13 @@ export class AuthCallbackComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.route.queryParams.subscribe({
         next: (params) => {
-          this.authService.handleAuthentication().then(() => {
-            this.router.navigate(['/user']);
-          }).catch(error => {
+          this.authService.handleAuthentication().catch(error => {
+            console.error('Authentication error:', error);
             this.router.navigate(['/error'], { queryParams: { error: 'authentication_failed' } });
           });
         }
       });
     }
   }
+
 }

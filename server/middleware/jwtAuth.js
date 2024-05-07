@@ -13,6 +13,9 @@ function getKey(header, callback){
 }
 
 const jwtCheck = (req, res, next) => {
+  if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+  }
   const token = req.headers.authorization?.split(' ')[1];
   jwt.verify(token, getKey, {
     audience: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/api/v2/',

@@ -1,30 +1,38 @@
-import { Component, EventEmitter, Output  } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output  } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StoriesService } from './stories.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-stories',
   templateUrl: './stories.component.html',
   styleUrls: ['./stories.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent]
 })
 export class StoriesComponent {
   @Output() storySelected = new EventEmitter<number>();
   stories$: Observable<any[]>;
+  mainContentTop: number = 0;
   private searchTextSubject = new BehaviorSubject<string>('');
   onStoryClick(storyId: number): void {
     this.storySelected.emit(storyId);
   }
-  constructor(private storiesService: StoriesService) {
+  constructor(private storiesService: StoriesService, private cdr: ChangeDetectorRef) {
     this.stories$ = this.searchTextSubject.asObservable().pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap(query => this.storiesService.getStories(query))
     );
+  }
+  
+  adjustMainContentPosition(navBottom: number): void {
+    this.mainContentTop = navBottom;
+    this.cdr.detectChanges();
   }
   clearSearch() {
     this.searchText = '';

@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input, OnChanges, SimpleChanges  } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef  } from '@angular/core';
 import { StoryService } from './story.service';
+import { ActivatedRoute } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 interface Story {
   title: string;
@@ -13,21 +16,20 @@ interface Story {
   templateUrl: './story.component.html',
   styleUrls: ['./story.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, NavbarComponent, FooterComponent]
 })
 export class StoryComponent implements OnInit {
   story?: Story;
   firstLetter: string = '';
   restOfContent: string = '';
-  @Input() storyId?: number;
+  storyId?: number;
+  mainContentTop: number = 0;
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.loadStory(params['id']);
+  });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['storyId'] && this.storyId != null) {
-      this.loadStory(this.storyId);
-    }
-  }
-  constructor(private storyService: StoryService) {}
+  constructor(private storyService: StoryService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
   loadStory(id: number): void {
     this.storyService.getStory(id).subscribe(
       data => {
@@ -40,5 +42,9 @@ export class StoryComponent implements OnInit {
       error => console.error('There was an error!', error)
     );
     console.log('Loading story with id:', id);
+  }
+  adjustMainContentPosition(navBottom: number): void {
+    this.mainContentTop = navBottom;
+    this.cdr.detectChanges();
   }
 }

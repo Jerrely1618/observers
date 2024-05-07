@@ -10,23 +10,21 @@
                 <div #navbarElement class="my-1 flex z-0 justify-between items-center px-1 sm:px-4 bg-base-100 dark:bg-base-150">
                     <ul class="nav-links flex items-center text-sm sm:text-lg">
                         
-                        <li class="px-3 sm:px-2">
+                        <li class="px-0 sm:px-2">
                             <app-auth></app-auth>
                         </li>
                         <li class="hidden sm:block px-1 sm:px-2">
                             <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
                         </li>
                     </ul>
-                    <div class="px-1 sm:px-2 py-2 bar-home h-full border-l border-r border-l-gray-200 border-r-gray-300">
+                    <div class="py-2 bar-home h-full ">
                         <a href="/" class="flex items-center">
-                            <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
-                            <span class="text-4xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-8xl font-semilight text-center mx-1 sm:mx-5">OUR WATCHERS</span>
-                            <span class="font-thin text-xs sm:text-lg md:text-xl">WW</span>
+                            <span class="text-4xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-8xl font-semilight text-center">OUR WATCHERS</span>
                         </a>
                     </div>
                     <ul class="nav-links flex items-center text-sm sm:text-lg">
-                        <li (click)="onStoriesView()" class="hidden sm:block px-1 sm:px-2">
-                            <a  class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
+                        <li *ngIf="pageTitle != 'Stories'" class="hidden sm:block px-1 sm:px-2">
+                            <a href="/stories" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Stories</a>
                         </li>
                         <li class="hidden sm:block  px-1 sm:px-2">
                             <div class="nav-links flex flex-col items-center space-y-0">
@@ -35,7 +33,7 @@
                             </div>
                         </li>
                     </ul>
-                    <label for="my-drawer" class="block sm:hidden drawer-button px-3 sm:px-2">More</label>
+                    <label for="my-drawer" class="block sm:hidden text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary drawer-button px-3 sm:px-2 fa-solid fa-bars"></label>
 
                 </div>
                 <div class="animated-line mb-5"></div>

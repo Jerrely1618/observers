@@ -1,7 +1,7 @@
 <div>
     <div *ngIf="(authService.getErrors() | async) as error" class="error">{{ error }}</div>
-    <div>
-        <button (click)="login()">Log In</button>
-        <button (click)="signup()">Sign Up</button>
+    <div class="flex flex-col">
+        <button class="pr-2 text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary" (click)="login()">Log In</button>
+        <button class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary" (click)="signup()">Sign Up</button>
     </div>
 </div>

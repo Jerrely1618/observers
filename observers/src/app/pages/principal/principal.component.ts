@@ -30,7 +30,6 @@ export class PrincipalComponent implements AfterViewInit {
   onStoriesViewed(): void {
     this.currentView = 'stories';
   }
-
   adjustMainContentPosition(navBottom: number): void {
     this.mainContentTop = navBottom;
     this.cdr.detectChanges();

@@ -1,22 +1,55 @@
-<div class="flex flex-col min-h-[75vh]">
-    <div class="flex items-center rounded-full shadow-lg relative">
-        <i class="fas fa-search absolute text-gray-400 ml-4"></i>
-        <textarea
-            class="form-textarea resize-none w-auto min-w-full max-w-2xl rounded-3xl py-2 pl-14 pr-20 outline-none"
-            placeholder="Search stories by name or author..."
-            [(ngModel)]="searchText"
-            (keydown.enter)="searchStories($event)"
-            (input)="adjustTextareaHeight($any($event.target))"
-            rows="1"></textarea>
-        <button *ngIf="searchText" (click)="clearSearch()" class="absolute right-14">
-            <i class="fas fa-times-circle text-gray-400"></i>
-        </button>
-        <button (click)="startSpeechRecognition()" class="absolute right-6">
-            <i class="fas fa-microphone text-gray-400"></i>
-        </button>
+<div class="drawer p-5 h-full flex flex-col">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content">
+        <app-navbar (bottomNav)="adjustMainContentPosition($event)" [pageTitle]="'Stories'"></app-navbar>
+        <div class="flex-grow overflow-hidden">
+            <div [style.margin-top.px]="mainContentTop" class="absolute inset-0 -pl-4 p-0 sm:p-5">
+                <div class="w-full h-full mt-5 grid grid-cols-6 gap-0">
+                    <div class="col-span-1 hidden sm:flex"></div>
+                    <div class="col-span-6 sm:col-span-4 mx-5 h-full">
+                        <div class="flex flex-col min-h-[75vh]">
+                            <div class="flex items-center rounded-full shadow-lg relative">
+                                <i class="fas fa-search absolute text-gray-400 ml-4"></i>
+                                <textarea
+                                    class="form-textarea resize-none w-auto min-w-full max-w-2xl rounded-3xl py-2 pl-14 pr-20 outline-none"
+                                    placeholder="Search stories by name or author..."
+                                    [(ngModel)]="searchText"
+                                    (keydown.enter)="searchStories($event)"
+                                    (input)="adjustTextareaHeight($any($event.target))"
+                                    rows="1"></textarea>
+                                <button *ngIf="searchText" (click)="clearSearch()" class="absolute right-14">
+                                    <i class="fas fa-times-circle text-gray-400"></i>
+                                </button>
+                                <button (click)="startSpeechRecognition()" class="absolute right-6">
+                                    <i class="fas fa-microphone text-gray-400"></i>
+                                </button>
+                            </div>
+                            <div *ngFor="let story of stories$ | async" class="mt-4 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <a [href]="'/story/' + story.id">
+                                    <h3 class="text-lg font-semibold">{{ story.title }}</h3>
+                                    <p class="text-sm">{{ story.author }}</p>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <app-footer ></app-footer>
+                    </div> 
+                    <div class="col-span-1 hidden sm:flex"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div *ngFor="let story of stories$ | async" class="mt-4 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" (click)="onStoryClick(story.id)">
-        <h3 class="text-lg font-semibold">{{ story.title }}</h3>
-        <p class="text-sm">{{ story.author }}</p>
+    <div class="drawer-side">
+        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <li class=" px-1 sm:px-2">
+                <a href="/stories" class="cursor-pointer text-sm sm:text-lg md:text-2xl text-dark ">Stories</a>
+            </li>
+            <li class=" px-1 sm:px-2">
+                <a href="/contact" class="text-sm sm:text-lg md:text-2xl no-underline text-dark hover:text-secondary">Contact</a>
+            </li>
+        </ul>
     </div>
+    
 </div>
+
