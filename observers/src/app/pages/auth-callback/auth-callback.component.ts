@@ -21,7 +21,7 @@ export class AuthCallbackComponent implements OnInit {
         next: (params) => {
           this.authService.handleAuthentication().catch(error => {
             console.error('Authentication error:', error);
-            this.router.navigate(['/error'], { queryParams: { error: 'authentication_failed' } });
+            this.router.navigate(['/'], { queryParams: { error: 'authentication_failed' } });
           });
         }
       });

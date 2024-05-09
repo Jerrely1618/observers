@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth0Client } from '@auth0/auth0-spa-js';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, from, of, switchMap, tap, throwError } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
@@ -23,9 +23,11 @@ export class AuthServicesComponent {
       clientId: '1h4ucTDXA9vVDd2A0oAAMObRaqLqa8vV',
       authorizationParams: {
         redirect_uri: 'https://localhost:4200/callback',
-        audience: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/api/v2/'
+        audience: 'https://dev-jx5b0ki2qctj8hxd.us.auth0.com/api/v2/',
+        scope: 'openid profile email read:users'
       },
-      cacheLocation: 'localstorage',
+      
+      cacheLocation: 'memory',
     });
 
     const isAuthenticated = await this.auth0Client.isAuthenticated();
@@ -34,34 +36,65 @@ export class AuthServicesComponent {
         this.router.navigate(['/user']);
     }
   }
+  
   public getUser(): Observable<any> {
-    const itemJSON = localStorage.getItem('access_token');
-    if (!itemJSON) {
-      console.error('No token found in localStorage');
-      return throwError(() => new Error('No token found'));
+    if (!this.auth0Client) {
+      console.error('Auth0Client is not initialized.');
+      this.router.navigate(['/error'], { queryParams: { error: 'client_not_initialized' } });
+      return throwError(() => new Error('Auth0Client is not initialized'));
     }
   
-    let item;
-    try {
-      item = JSON.parse(itemJSON);
-    } catch (e) {
-      console.error('Failed to parse token', e);
-      return throwError(() => new Error('Failed to parse token'));
-    }
-  
-    if (!item || new Date().getTime() > item.expiry) {
-      localStorage.removeItem('access_token');
-      console.error('Token has expired');
-      return throwError(() => new Error('Token has expired'));
-    }
-  
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${item.value}`
-    });
-  
-    return this.http.get(`${this.apiUrl}/user`, { headers });
+    return from(this.auth0Client.getUser()).pipe(
+      switchMap(user => {
+        if (!user || !user.email) {
+          console.error('Email not found in user data.');
+          this.router.navigate(['/login']);
+          return throwError(() => new Error('Email not found. Please login again.'));
+        }
+
+        const email = user.email;
+
+        return from(this.auth0Client!.getTokenSilently()).pipe(
+          switchMap(token => {
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            });
+            return this.http.get(`${this.apiUrl}/user?email=${encodeURIComponent(email)}`, { headers });
+          }),
+          catchError(error => {
+            console.error('Error fetching user data:', error);
+            if (error.status === 401 || error.status === 403) {
+              this.router.navigate(['/']);
+              return throwError(() => new Error('Session expired. Please log in again.'));
+            }
+            return throwError(() => new Error('Failed to load user data'));
+          })
+        );
+      }),
+      catchError(error => {
+        console.error('Error retrieving user profile:', error);
+        this.router.navigate(['/']);
+        return throwError(() => new Error('Failed to retrieve user profile.'));
+      })
+    );
   }
-  
+  public checkSession(): Observable<boolean> {
+    if (!this.auth0Client) {
+      console.error('Auth0Client is not initialized.');
+      this.router.navigate(['/callback'], { queryParams: { error: 'client_not_initialized' } });
+      return throwError(() => new Error('Auth0Client is not initialized'));
+    }
+    return from(this.auth0Client.checkSession()).pipe(
+        switchMap(() => this.auth0Client!.isAuthenticated()),
+        tap(isAuthenticated => this.loggedIn.next(isAuthenticated)),
+        catchError(error => {
+            console.error('Session check failed:', error);
+            this.loggedIn.next(false);
+            return of(false);
+        })
+    );
+}
   public async handleAuthentication(): Promise<void> {
     if (!this.auth0Client) {
       console.error('Auth0Client is not initialized.');
@@ -119,13 +152,10 @@ export class AuthServicesComponent {
     this.auth0Client.loginWithRedirect().then(() => {
       this.auth0Client?.getTokenSilently().then(token => {
         const now = new Date();
-        console.log(token)
         const item = {
           value: token,
           expiry: now.getTime() + 3600000,
         };
-        localStorage.setItem('access_token', JSON.stringify(item));
-        console.log('Token stored with expiry:', item);
       }).catch(err => {
         console.error('Error retrieving token', err);
       });
