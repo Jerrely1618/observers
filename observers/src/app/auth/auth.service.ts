@@ -12,6 +12,8 @@ export class AuthServicesComponent {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private errors: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private apiUrl = 'http://localhost:3000/api';
+  private userSource = new BehaviorSubject<any | null>(null);
+  user$ = this.userSource.asObservable();
   constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private http: HttpClient) {
     if (isPlatformBrowser(this.platformId)) {
       this.initializeAuth0();
@@ -195,5 +197,8 @@ export class AuthServicesComponent {
   }
   public getErrors(): Observable<any> {
     return this.errors.asObservable();
+  }
+  setUser(user: any) {
+    this.userSource.next(user);
   }
 }
