@@ -1,27 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db/pool');
-
 const { jwtCheck } = require('../middleware/jwtAuth');
-const { ManagementClient } = require('auth0');
-
-const auth0 = new ManagementClient({
-  domain: process.env.AUTH0_DOMAIN,
-  clientId: process.env.AUTH0_CLIENT_ID,
-  clientSecret: process.env.AUTH0_CLIENT_SECRET,
-  scope: 'read:users'
-});
 
 router.post('/api/signup', jwtCheck, async (req, res) => {
-    const { email, username } = req.body;
+    const { email, username, profilepictureurl } = req.body;
+    console.log(req.body)
     try {
         const exists = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
         if (exists.rows.length) {
             return res.status(409).send({ error: 'User already exists' });
         }
         const newUser = await pool.query(
-            'INSERT INTO users (email, username, stories_id, favorites_id) VALUES ($1, $2, $3, $4) RETURNING *',
-            [email, username, [], []]
+            'INSERT INTO users (email, username, profilepictureurl, stories_id, favorites_id, totallikes, followers) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+            [email, username,profilepictureurl, [], [], 0, 0]
         );
         res.json(newUser.rows[0]);
     } catch (error) {
@@ -38,7 +30,8 @@ router.get('/api/user', jwtCheck, async (req, res) => {
   try {
     const userData = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userData.rows.length > 0) {
-      res.json(userData.rows[0]);
+      const user = userData.rows[0];
+      res.json(user);
     } else {
       res.status(404).send({ error: 'User not found' });
     }

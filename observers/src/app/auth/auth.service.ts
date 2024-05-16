@@ -4,6 +4,7 @@ import { Auth0Client } from '@auth0/auth0-spa-js';
 import { BehaviorSubject, Observable, catchError, from, of, switchMap, tap, throwError } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { profile } from 'node:console';
 @Injectable({
   providedIn: 'root'
 })
@@ -130,7 +131,6 @@ export class AuthServicesComponent {
   
 
   private createUserInDatabase(user: any): void {
-    console.log('Creating user in database:', user);
     this.auth0Client?.getTokenSilently().then((token: string) => {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`,
@@ -138,10 +138,10 @@ export class AuthServicesComponent {
       });
       const userData = {
         email: user.email,
-        username: user.nickname || 'defaultUsername'
+        username: user.nickname || 'defaultUsername',
+        profilepictureurl: user.picture
       };
       this.http.post(`${this.apiUrl}/signup`, userData, { headers }).subscribe({
-        next: (response) => console.log('User created in database:', response),
         error: (err) => console.error('Error creating user in database:', err)
       });
     }).catch((error: any) => {

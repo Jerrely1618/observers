@@ -7,10 +7,9 @@ const pool = new Pool({
     database: process.env.PG_DATABASE,
     password: process.env.PG_PASSWORD,
     port: process.env.PG_PORT,
-    // Connection limits and other parameters
-    max: 20, // maximum number of clients in the pool
-    idleTimeoutMillis: 30000, // idle before being closed
-    connectionTimeoutMillis: 2000, // return an error after 2s if connection could not be established
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
 });
 
 module.exports = pool;

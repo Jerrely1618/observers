@@ -1,1 +1,41 @@
-<app-navbar-user [authService]="authService" [pageTitle]="'dashboard'">></app-navbar-user>
+<app-navbar-user [authService]="authService" [pageTitle]="'dashboard'"></app-navbar-user>
+<section class="user-data flex items-center p-5 rounded-lg">
+    <img src="{{ user?.profilepictureurl }}" alt="Profile Picture of {{ user?.username }}" class="w-24 h-24 rounded-full mr-5" />
+    <div>
+        <h1 class="text-2xl mb-2">Hello, {{ user?.username }}!</h1>
+        <div class="grid grid-cols-2 gap-5">
+            <div class="col-span-1 text-center">
+                <h2 class="text-lg">Likes</h2>
+                <h2 class="text-xl">{{ user?.totallikes }}</h2>
+            </div>
+            <div class="col-span-1 text-center">
+                <h2 class="text-lg">Followers</h2>
+                <h2 class="text-xl">{{ user?.followers }}</h2>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button class="fa-solid fa-cog"></button>
+    </div>
+</section>
+
+<section role="tablist" class="dashboard-objects tabs tabs-bordered my-5 mx-10">
+    <a role="tab" class="tab" [ngClass]="{'tab-active': selectedTab === 'myStories'}" (click)="selectTab('myStories')">My Stories</a>
+    <a role="tab" class="tab" [ngClass]="{'tab-active': selectedTab === 'following'}" (click)="selectTab('following')">Following</a>
+    <a role="tab" class="tab" [ngClass]="{'tab-active': selectedTab === 'followers'}" (click)="selectTab('followers')">Followers</a>
+    <a role="tab" class="tab" [ngClass]="{'tab-active': selectedTab === 'comments'}" (click)="selectTab('comments')">Comments</a>
+    <div class="mt-3">
+        <div *ngIf="selectedTab === 'myStories'">
+            Test My Stories
+        </div>
+        <div *ngIf="selectedTab === 'following'">
+            Test Following
+        </div>
+        <div *ngIf="selectedTab === 'followers'">
+            Test Followers
+        </div>
+        <div *ngIf="selectedTab === 'comments'">
+            Test Comments
+        </div>
+    </div>
+</section>
